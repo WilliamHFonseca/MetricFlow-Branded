@@ -1,0 +1,237 @@
+/* --- RESET BÁSICO Y FUENTE MODERNA --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+:root {
+    --bg-color: #f8f9fa;
+    --panel-bg-color: #ffffff;
+    --border-color: #dee2e6;
+    --text-color: #212529;
+    --font-family: 'Inter', sans-serif;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow: hidden;
+}
+
+/* --- ESTRUCTURA PRINCIPAL Y HEADER --- */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    background-color: var(--panel-bg-color);
+    border-bottom: 1px solid var(--border-color);
+    height: 65px;
+    box-sizing: border-box;
+}
+
+.dashboard-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0;
+}
+
+.filter-toggle-btn {
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.filter-toggle-btn:hover {
+    background-color: #e9ecef;
+}
+
+.filter-toggle-btn svg {
+    width: 24px;
+    height: 24px;
+    stroke: var(--text-color);
+}
+
+/* --- LAYOUT FLEXBOX (PANEL + GRÁFICO) --- */
+.main-container {
+    display: flex;
+    height: calc(100vh - 65px);
+}
+
+.chart-container {
+    flex: 1;
+    padding: 1.5rem;
+    position: relative;
+    min-width: 0;
+    overflow: hidden;
+    transition: width 0.3s ease-in-out;
+}
+
+#graficoTendencia {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+/* --- PANEL DE FILTROS LATERAL --- */
+.filters-panel {
+    width: 350px; 
+    min-width: 300px;
+    max-width: 600px;
+    background-color: var(--panel-bg-color);
+    border-left: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    transition: width 0.3s ease-in-out, min-width 0.3s ease-in-out, padding 0.3s ease-in-out;
+    overflow: hidden;
+}
+
+.main-container:not(.filters-visible) .filters-panel {
+    width: 0;
+    min-width: 0;
+    border-left: none;
+}
+
+.filters-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 1.2rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.filters-body {
+    padding: 1.5rem;
+    overflow-y: auto;
+    flex: 1;
+    min-width: 280px;
+}
+
+/* --- REDIMENSIONADOR (RESIZER) --- */
+.resizer {
+    width: 5px;
+    background: #e9ecef;
+    cursor: ew-resize;
+    height: 100%;
+    transition: width 0.3s ease-in-out;
+    flex-shrink: 0;
+}
+
+.main-container:not(.filters-visible) .resizer {
+    width: 0;
+}
+
+/* --- ESTILOS PARA FORMULARIOS --- */
+.form-group { margin-bottom: 1.5rem; }
+.form-label { font-weight: 500; margin-bottom: 0.5rem; display: block; }
+.form-select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background-color: #fff;
+    font-size: 1rem;
+}
+
+.btn-group-lines {
+    width: 100%;
+    padding: 0.5rem;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.btn-group-lines:hover {
+    background-color: #5a6268;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 1rem 0;
+}
+
+/* Estilos del árbol de fecha */
+.tree-filter { border: 1px solid var(--border-color); border-radius: 8px; padding: 0.5rem; height: 200px; overflow-y: auto; }
+.tree-filter ul { list-style-type: none; padding-left: 1rem; }
+.tree-filter li { padding: 2px 0; }
+.tree-filter .year-label { cursor: pointer; font-weight: 500; }
+.tree-filter .months-container { display: none; padding-top: 5px; }
+.tree-filter .toggle { cursor: pointer; margin-right: 0.25rem; font-family: monospace; display: inline-block; width: 15px; }
+
+/* --- ESTILOS PARA EL MENÚ CONTEXTUAL --- */
+.context-menu {
+    position: absolute;
+    display: none;
+    background-color: var(--panel-bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 1000;
+    padding: 0.5rem 0;
+}
+
+.context-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.context-menu li {
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+.context-menu li:hover {
+    background-color: #e9ecef;
+}
+
+.context-menu li.disabled {
+    color: #adb5bd;
+    cursor: not-allowed;
+    background-color: transparent !important;
+}
+
+/* --- ESTILOS PARA EL MODAL DE AGRUPACIÓN --- */
+.group-checklist {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    padding: 1rem;
+    border-radius: 6px;
+}
+
+.existing-group-item {
+    background-color: #e9ecef;
+    padding: 0.75rem;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+}
+
+.existing-group-item .group-name {
+    font-weight: bold;
+}
+
+.existing-group-item .group-types {
+    font-size: 0.8rem;
+    color: #6c757d;
+    word-break: break-word;
+}
+
+.delete-group-btn {
+    float: right;
+    color: #dc3545;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;
+    line-height: 1;
+}
+.delete-group-btn:hover {
+    color: #a71d2a;
+}
